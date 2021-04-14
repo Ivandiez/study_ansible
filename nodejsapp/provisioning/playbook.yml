@@ -5,11 +5,8 @@
   vars:
     node_apps_location: /usr/local/opt/node
 
-  tasks:
-    - name: Install EPEL repo.
-      yum: name=epel-release state=present
-
-    - name: Install Remi GPG key.
+  pre_tasks:
+    - name: Import Remi GPG key.
       rpm_key:
         key: "https://rpms.remirepo.net/RPM-GPG-KEY-remi"
         state: present
@@ -19,15 +16,16 @@
         name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
         state: present
 
+    - name: Install EPEL repo.
+      yum: name=epel-release state=present
+
     - name: Ensure firewalld is stopped (since this is a test server).
       service: name=firewalld state=stopped
 
-    - name: Install Node.js and npm.
-      yum: name=npm state=present enablerepo=epel
+  roles:
+    - nodejs
 
-    - name: Install Forever (to run our Node.js app)
-      npm: name=forever global=yes state=present
-
+  tasks:
     - name: Ensure Node.js app folder exists.
       file: "path={{ node_apps_location }} state=directory"
 
