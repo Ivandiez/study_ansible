@@ -15,7 +15,7 @@
   tasks:
     - name: Provision DigitalOcean droplets.
       digital_ocean_droplet:
-        state: "{{ item.state | default('present') }}"
+        state: "{{ item.state | default('absent') }}"
         name: "{{ item.name }}"
         private_networking: yes
         size: "{{ item.size | default('s-1vcpu-1gb') }}"
