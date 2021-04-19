@@ -1,0 +1,13 @@
+# This is the default playbook for configure 
+# my local machine by Ansible playbooks.
+---
+- hosts: localhost
+  user: ivan
+  connection: local
+
+  vars_files:
+    - vars/mail.yml
+
+  roles: []
+
+  tasks: []
