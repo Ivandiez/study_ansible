@@ -1,0 +1,21 @@
+---
+- hosts: all
+
+  pre_tasks:
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600
+
+  vars:
+    ansible_install_method: pip
+    firewall_allowed_tcp_ports:
+      - "22"
+      - "8080"
+    jenkins_plugins:
+      - ansicolor
+
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.pip
+    - geerlingguy.ansible
+    - geerlingguy.java
+    - geerlingguy.jenkins
